@@ -5,5 +5,5 @@
   "Version": "1.2.5",
   "AssemblyName": "Majordomo.dll",
   "EntryMethod": "Majordomo.Main.Load",
-  "HomePage": "https://bbs.nga.cn/read.php?tid=16207477"
+  //"HomePage": "https://bbs.nga.cn/read.php?tid=16207477"
 }

@@ -1,0 +1,7 @@
+﻿{
+  "Id": "TaiwuEditor",
+  "DisplayName": "属性练功",
+  "Version": "1.0.9.1",
+  "AssemblyName": "TaiwuEditor.dll",
+  "EntryMethod": "TaiwuEditor.Main.Load"
+}

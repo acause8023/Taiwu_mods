@@ -943,11 +943,11 @@ namespace MoreInfo
             List<int[]> newLifeMassage = new List<int[]> { };
 
             changer.backupMassage(key);
-           
+
             //Main.Logger.Log("setp1" + changer.getActorName(key));
             List<int> tlist = changer.getTypeList();
 
-          
+
 
             int count = DateFile.instance.actorLifeMassage[key].Count;
             //Main.Logger.Log("setp2:MaxCount:" + count);
@@ -1000,42 +1000,55 @@ namespace MoreInfo
     {
         static void Prefix(UIDate __instance)
         {
-            if (!Main.enabled || !Main.settings.mergeIcon)
-                return;
-            if (int.Parse(DateFile.instance.partWorldMapDate[DateFile.instance.mianPartId][101]) == 0)
-            {
-                __instance.changTrunEvents.Clear();
-            }
-            if (__instance.changTrunEvents.Count <= 0)
-            {
-                __instance.changTrunEvents.Add(new int[1]);
-            }
-            List<int[]> newEventList = new List<int[]>();
-            bool isAdded = false;
-            Changer changer = new Changer();
-            changer.resetPlaceIds();
-            for (int i = __instance.changTrunEvents.Count - 1; i > 0; i--)
-            {
-                int num2 = __instance.changTrunEvents[i][0];
-                int num3 = int.Parse(DateFile.instance.trunEventDate[num2][1]);
-                if (num3 > 0 && num2 == 248)
-                {
-                    int placeId = __instance.changTrunEvents[i][1];
-                    string name = string.Format("TrunEventIcon,{0},{1},{2}", num2, placeId, __instance.changTrunEvents[i][2]);
-                    string[] array = name.Split(new char[] { ',' });
-                    if (!isAdded)//仅保留一个图标
-                    {
-                        newEventList.Add(__instance.changTrunEvents[i]);
-                        isAdded = true;
-                    }
-                    changer.addPlaceId(placeId);
-                }
-                else
-                {
-                    newEventList.Add(__instance.changTrunEvents[i]);
-                }
-            }
-            __instance.changTrunEvents = newEventList;
+            return;
+            //    if (!Main.enabled || !Main.settings.mergeIcon)
+            //        return;
+
+            //    if (__instance.changTrunEvents == null)
+            //    {
+            //        __instance.changTrunEvents = new List<int[]>();
+            //    }
+
+            //    if (DateFile.instance.partWorldMapDate.ContainsKey(DateFile.instance.mianPartId))
+            //    {
+            //        if (DateFile.instance.partWorldMapDate[DateFile.instance.mianPartId].ContainsKey(101))
+            //        {
+            //            if (string.IsNullOrEmpty(DateFile.instance.partWorldMapDate[DateFile.instance.mianPartId][101]) || int.Parse(DateFile.instance.partWorldMapDate[DateFile.instance.mianPartId][101]) == 0)
+            //            {
+            //                __instance.changTrunEvents.Clear();
+            //            }
+            //        }
+            //    }
+            //    if (__instance.changTrunEvents.Count <= 0)
+            //    {
+            //        __instance.changTrunEvents.Add(new int[1]);
+            //    }
+            //    List<int[]> newEventList = new List<int[]>();
+            //    bool isAdded = false;
+            //    Changer changer = new Changer();
+            //    changer.resetPlaceIds();
+            //    for (int i = __instance.changTrunEvents.Count - 1; i > 0; i--)
+            //    {
+            //        int num2 = __instance.changTrunEvents[i][0];
+            //        int num3 = int.Parse(DateFile.instance.trunEventDate[num2][1]);
+            //        if (num3 > 0 && num2 == 248)
+            //        {
+            //            int placeId = __instance.changTrunEvents[i][1];
+            //            string name = string.Format("TrunEventIcon,{0},{1},{2}", num2, placeId, __instance.changTrunEvents[i][2]);
+            //            string[] array = name.Split(new char[] { ',' });
+            //            if (!isAdded)//仅保留一个图标
+            //            {
+            //                newEventList.Add(__instance.changTrunEvents[i]);
+            //                isAdded = true;
+            //            }
+            //            changer.addPlaceId(placeId);
+            //        }
+            //        else
+            //        {
+            //            newEventList.Add(__instance.changTrunEvents[i]);
+            //        }
+            //    }
+            //    __instance.changTrunEvents = newEventList;
         }
     }
 

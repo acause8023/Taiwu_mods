@@ -1,0 +1,8 @@
+﻿{
+    "Id": "ShowMeMore",
+    "DisplayName": "更多信息",
+    "Author": "FENG",
+    "Version": "0.0.8.6",
+    "AssemblyName": "ShowMeMore.dll",
+    "EntryMethod": "ShowMeMore.Main.Load"
+}

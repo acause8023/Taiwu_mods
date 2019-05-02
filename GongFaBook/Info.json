@@ -1,0 +1,8 @@
+﻿{
+  "Id": "GongFaBook",
+  "DisplayName": "功法显示增强",
+  "Author": "FENG",
+  "Version": "1.0.8",
+  "AssemblyName": "GongFaBook.dll",
+  "EntryMethod": "GongFaBook.Main.Load"
+}

@@ -211,12 +211,12 @@ namespace IllustratedHandbook
             // 主Canvs 开关
             #region MainCanvas
             mainCanvas = UICreator.CreateCanvas(name: "IllustratedHandbookCanvas");
-#if UNITY_EDITOR
-        mainCanvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
-        mainCanvas.GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-#else
-            mainCanvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-#endif
+            #if UNITY_EDITOR
+                mainCanvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+                mainCanvas.GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+            #else
+                mainCanvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            #endif
             mainCanvas.GetComponent<Canvas>().sortingLayerName = "GUI";
             mainCanvas.GetComponent<Canvas>().sortingOrder = 998;  // ShowTips 的 sortingorder 为1000
             DontDestroyOnLoad(mainCanvas);
@@ -246,9 +246,8 @@ namespace IllustratedHandbook
             titlePanelOndrag.triggers.Add(eventEntry);
 
 
-            titleText = CreateText("TitleText", titlePanel.gameObject, "<b>图鉴/添加物品 1.0.2</b>", Color.white, 27, v2(0.5f, 1), v2(0.5f, 1), v2(680, 30), v2(0, -25));
+            titleText = CreateText("TitleText", titlePanel.gameObject, "<b>图鉴</b>", Color.white, 27, v2(0.5f, 1), v2(0.5f, 1), v2(680, 30), v2(0, -25));
             #endregion
-
 
             // 加载中面板
             #region LoadingPanel
@@ -262,28 +261,19 @@ namespace IllustratedHandbook
             SetAnchor(loadingTextPanel.gameObject, v3(1), v2(0), v2(1), v2(20, 130), v2(-20, 0));
 
             tipText = CreateText("TipText", loadingTextPanel.gameObject,
-             "游戏未开始 尚未加载数据\n\n请先开始游戏~\n\n\n" +
-             "<size=16><color=white><b>Tips:</b>\n Ctrl + F11开关窗口\n<b>拖动标题</b>可以移动窗口哦\n" +
-             "获取书籍会随机残页、无法查看促织\n" +
-             "获取物品后需重新打开背包才看的到\n推荐配合《功法书籍显示》MOD使用\n<color=red>NEW</color> 在人物菜单切换到同道可以将物品直接添加到同道背包(不会影响亲密)\n" +
-             "<b>工具无错</b> 请<b>自觉</b>平衡游戏体验</color></size>",
-              new Color32(0, 255, 213, 255), 28, v2(0.5f), v2(0.5f), v2(600, 400), v2(0)
-            );
+            "游戏未开始 尚未加载数据\n\n" +
+            "请先开始游戏~\n\n" +
+            "<size=16><color=white>" +
+            "<b>Tips:</b>\n " +
+            "Ctrl + F11开关窗口\n" +
+            "<b>拖动标题</b>移动窗口\n" +
+            "获取书籍会随机残页、无法查看促织\n" +
+            "获取物品后需重新打开背包才看的到\n" +
+            "在人物菜单切换到同道可以将物品直接添加到同道背包-不影响亲密\n" +
+            "</color></size>",
+              new Color32(0, 255, 213, 255), 28, v2(0.5f), v2(0.5f), v2(600, 400), v2(0));
 
-            aboutText = CreateText("AboutText", loadingPanel.gameObject, "By: yyuueexxiinngg", Color.white, 14, v2(0), v2(0), v2(160, 30), v2(128.8f, 13.9f));
-            aboutText.GetComponent<Text>().alignment = TextAnchor.UpperLeft;
 
-            NGAButton = CreateButton("NGAButton", loadingPanel.gameObject, "点此打开本MOD NGA发布地址", Color.white, "Graphics/BaseUI/GUI_Base", Color.black, v2(0.5f, 0), v2(0.5f, 0), v2(500, 31), v2(0, 100));
-            NGAButton.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                Application.OpenURL("https://nga.178.com/read.php?tid=15239374");
-            });
-
-            GithubButton = CreateButton("GithubBotton", loadingPanel.gameObject, "点此打开MOD开源项目Github地址", Color.white, "Graphics/BaseUI/GUI_Base", Color.black, v2(0.5f, 0), v2(0.5f, 0), v2(500, 31), v2(0, 55));
-            GithubButton.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                Application.OpenURL("https://github.com/yyuueexxiinngg/Taiwu_mods");
-            });
             #endregion
 
             // 过滤面板

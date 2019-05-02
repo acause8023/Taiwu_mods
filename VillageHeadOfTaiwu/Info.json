@@ -4,6 +4,5 @@
     "Author": "sth4nothing",
     "Version": "1.2.1",
     "AssemblyName": "VillageHeadOfTaiwu.dll",
-    "EntryMethod": "Sth4nothing.VillageHeadOfTaiwu.Main.Load",
-    "HomePage": "https://bbs.nga.cn/read.php?tid=15367167"
+    "EntryMethod": "Sth4nothing.VillageHeadOfTaiwu.Main.Load"
 }

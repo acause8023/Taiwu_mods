@@ -1,0 +1,8 @@
+﻿{
+  "Id": "ShowQuQu",
+  "DisplayName": "秀蛐蛐",
+  "Author": "FENG",
+  "Version": "1.0.3",
+  "AssemblyName": "ShowQuQu.dll",
+  "EntryMethod": "ShowQuQu.Main.Load"
+}

@@ -294,13 +294,25 @@ namespace CharacterFloatInfo
             return false;
         }
 
+        private static bool TestObject(string point)
+        {
+            Main.Logger.Log(string.Format("Start-{0}", point));
+            return true;
+        }
+
         public static void Postfix(bool on, GameObject tips, ref Text ___itemMoneyText, ref Text ___itemLevelText, ref Text ___informationMassage, ref Text ___informationName, ref bool ___anTips, ref int ___tipsW, ref int ___tipsH)
         {
+
             if (!on || !Main.enabled || ActorMenu.instance == null || tips == null) return;
 
             bool needShow = false;
             string[] array = tips.name.Split(',');
             int id = array.Length > 1 ? int.Parse(array[1]) : 0;
+
+            //Main.Logger.Log(tips.name);
+            //Main.Logger.Log(tips.tag);
+
+            bool continueFix = true;
 
             //大地圖下面的太吾自己的頭像
             if (array[0] == "PlayerFaceButton")
@@ -318,67 +330,79 @@ namespace CharacterFloatInfo
                 windowType = WindowType.TeamActor;
             }
             else
-            //同道列表
-            if (tips.transform.parent.name == "ActorListMianHolder")
+            if (tips.transform != null && tips.transform.parent != null)
             {
-                needShow = id > 0 && Main.settings.enableAM;
-                windowType = WindowType.ActorMenu;
-            }
-            else
-            //人物訊息內的關係頁及輪迴前世
-            if (tips.transform.parent.name == "ActorListHolder" || (ActorMenu.instance.actorMenu.activeSelf && tips.transform.parent.name == "ActorHolder"))
-            {
-                needShow = Main.settings.enableRI;
-                windowType = WindowType.Relationship;
-            }
-            else
-            //太吾村內工作人員選單
-            if (HomeSystem.instance.buildingWindow.gameObject.activeSelf && tips.transform.parent.name == "ActorHolder")
-            {
-                needShow = Main.settings.enableBW;
-                windowType = WindowType.BuildingWindow;
-            }
-            else
-            //对话界面的人物选择
-            if (MassageWindow.instance.actorWindow.activeInHierarchy && tips.transform.parent.name == "ActorHolder")
-            {
-                needShow = Main.settings.enableMAC;
-                windowType = WindowType.DialogChooseActors;
-            }
-            //对话窗口的人物头像
-            else if (array[0] == "FaceHolder")
-            {
-                id = MassageWindow.instance.eventMianActorId;
-                needShow = Main.settings.enableDI;
-                windowType = WindowType.Dialog;
-            }
-            else
-            //建筑/地图左边的列表
-            if (array[0] == "Actor" && DateFile.instance.actorsDate.ContainsKey(id))
-            {
-                if (WorldMapSystem.instance.choosePlaceId == DateFile.instance.mianPlaceId) //当前格显示
+                //同道列表
+                if (tips.transform.parent.name == "ActorListMianHolder")
                 {
-                    needShow = Main.settings.enableMAL;
-                    windowType = WindowType.MapActorList;
+                    continueFix = false;
+                    needShow = id > 0 && Main.settings.enableAM;
+                    windowType = WindowType.ActorMenu;
                 }
-                else if (WorldMapSystem.instance.choosePlaceId != DateFile.instance.mianPlaceId && WorldMapSystem.instance.playerNeighbor.Contains(WorldMapSystem.instance.choosePlaceId)) //邻格显示
+                else
+                //人物訊息內的關係頁及輪迴前世
+                if (tips.transform.parent.name == "ActorListHolder" || (ActorMenu.instance.actorMenu.activeSelf && tips.transform.parent.name == "ActorHolder"))
                 {
-                    needShow = Main.settings.enableMAN;
-                    windowType = WindowType.MapActorList;
+                    continueFix = false;
+                    needShow = Main.settings.enableRI;
+                    windowType = WindowType.Relationship;
+                }
+                else
+                //太吾村內工作人員選單
+                if (HomeSystem.instance.buildingWindow.gameObject.activeSelf && tips.transform.parent.name == "ActorHolder")
+                {
+                    continueFix = false;
+                    needShow = Main.settings.enableBW;
+                    windowType = WindowType.BuildingWindow;
+                }
+                else
+                //对话界面的人物选择
+                if (MassageWindow.instance.actorWindow.activeInHierarchy && tips.transform.parent.name == "ActorHolder")
+                {
+                    continueFix = false;
+                    needShow = Main.settings.enableMAC;
+                    windowType = WindowType.DialogChooseActors;
                 }
             }
-            else // 工人界面的新村民
-            if (array[0] == "ActorIcon")
+
+            if (continueFix)
             {
-                needShow = Main.settings.enableWNV;
-                windowType = WindowType.WorkerNewVillager;
+                //对话窗口的人物头像
+                if (array[0] == "FaceHolder")
+                {
+                    id = MassageWindow.instance.eventMianActorId;
+                    needShow = Main.settings.enableDI;
+                    windowType = WindowType.Dialog;
+                }
+                else
+                //建筑/地图左边的列表
+                if (array[0] == "Actor" && DateFile.instance.actorsDate.ContainsKey(id))
+                {
+                    if (WorldMapSystem.instance.choosePlaceId == DateFile.instance.mianPlaceId) //当前格显示
+                    {
+                        needShow = Main.settings.enableMAL;
+                        windowType = WindowType.MapActorList;
+                    }
+                    else if (WorldMapSystem.instance.choosePlaceId != DateFile.instance.mianPlaceId && WorldMapSystem.instance.playerNeighbor.Contains(WorldMapSystem.instance.choosePlaceId)) //邻格显示
+                    {
+                        needShow = Main.settings.enableMAN;
+                        windowType = WindowType.MapActorList;
+                    }
+                }
+                else // 工人界面的新村民
+                if (array[0] == "ActorIcon")
+                {
+                    needShow = Main.settings.enableWNV;
+                    windowType = WindowType.WorkerNewVillager;
+                }
+                else
+                if (array[0] == "NewActorFace")
+                {
+                    needShow = Main.settings.enableWNV;
+                    windowType = WindowType.WorkerNewVillager;
+                }
             }
-            else
-            if (array[0] == "NewActorFace")
-            {
-                needShow = Main.settings.enableWNV;
-                windowType = WindowType.WorkerNewVillager;
-            }
+
 
             isDead = int.Parse(DateFile.instance.GetActorDate(id, 26, false)) > 0;
             if (isDead && !Main.settings.deadActor)
